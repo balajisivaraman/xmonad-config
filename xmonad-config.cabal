@@ -15,7 +15,6 @@ executable xmonad-config
   build-depends:
     , base
     , containers
-    , dbus
     , text
     , time
     , utf8-string

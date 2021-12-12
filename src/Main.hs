@@ -1,6 +1,4 @@
 import qualified Codec.Binary.UTF8.String      as UTF8
-import qualified DBus                          as D
-import qualified DBus.Client                   as D
 import           Data.List                      ( isInfixOf )
 import           Data.Map                       ( Map
                                                 , union
@@ -125,18 +123,6 @@ myStartupHook = do
   spawnOnce
     "xss-lock --transfer-sleep-lock -- i3lockr --brighten 30 --blur 25 -- --nofork --ignore-empty-password"
   spawnOnce "xsetroot -cursor_name left_ptr"
-
--- Emit a DBus signal on log updates
-dbusOutput :: D.Client -> String -> IO ()
-dbusOutput dbus str = do
-  let signal = (D.signal objectPath interfaceName memberName)
-        { D.signalBody = [D.toVariant $ UTF8.decodeString str]
-        }
-  D.emit dbus signal
- where
-  objectPath    = D.objectPath_ "/org/xmonad/Log"
-  interfaceName = D.interfaceName_ "org.xmonad.Log"
-  memberName    = D.memberName_ "Update"
 
 systemPromptCmds =
   [ ("Shutdown", spawn "shutdown -h now")
