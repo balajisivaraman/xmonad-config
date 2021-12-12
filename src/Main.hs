@@ -20,7 +20,9 @@ import           XMonad.Hooks.ManageDocks       ( avoidStruts
 import           XMonad.Hooks.StatusBar.PP
 import           XMonad.Layout.NoBorders        ( noBorders )
 import           XMonad.Layout.NoFrillsDecoration
+import           XMonad.Layout.Renamed
 import           XMonad.Layout.Spacing
+import           XMonad.Layout.ThreeColumns
 import           XMonad.Prompt
 import           XMonad.Prompt.XMonad
 import qualified XMonad.StackSet               as W
@@ -103,14 +105,16 @@ addTopBar = noFrillsDeco shrinkText topBar
 mySpacing = spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True
 
 myLayoutHook =
-  addTopBar
-    $ avoidStruts
+  named "Standard"
+    $ addTopBar
     -- Needed to ensure XMobar stays on top
+    $ avoidStruts
+    -- Setup 10 spacing as above
     $ mySpacing
-     -- Setup 10 spacing as above
-    $ noBorders
     -- Don't want borders
-    $ layoutHook desktopConfig
+    $ noBorders
+    $ ThreeColMid 1 (1 / 10) 0.45
+  where named n = renamed [XMonad.Layout.Renamed.Replace n]
 
 myStatusBar = "xmobar -x1"
 myLogHook h = do
