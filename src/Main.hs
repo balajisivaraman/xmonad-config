@@ -7,6 +7,8 @@ import           Data.Map                       ( Map
                                                 )
 import           System.Exit                    ( exitSuccess )
 import           XMonad
+import           XMonad.Actions.WindowNavigation
+                                                ( withWindowNavigation )
 import           XMonad.Config.Desktop
 import qualified XMonad.Core                   as XMonad
 import           XMonad.Hooks.EwmhDesktops      ( ewmh
@@ -229,7 +231,8 @@ myKeys c = mkKeymap
 
 main = do
   xmproc <- spawnPipe myStatusBar
-  xmonad
+  config <-
+    withWindowNavigation (xK_l, xK_j, xK_k, xK_semicolon)
     -- Needed to ensure stuff like XMobar stays on top
     $ docks
     -- Advertises EWMH support
@@ -237,6 +240,7 @@ main = do
     -- Enables fullscreen EWMH support
     $ ewmhFullscreen
     $ myConfig xmproc
+  xmonad config
 
 myConfig p = desktopConfig { borderWidth       = 0
                            , focusFollowsMouse = False
