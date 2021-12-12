@@ -213,10 +213,8 @@ myKeys c = mkKeymap
       -----------------------------------------------------------
       -- Window Operations
       -----------------------------------------------------------
-    ("M-h"  , sendMessage Shrink)
-  , ("M-l"  , sendMessage Expand)
-  , ("M-S-j", windows W.swapDown)
-  , ("M-S-k", windows W.swapUp)
+    ("M-["  , sendMessage Shrink)
+  , ("M-]"  , sendMessage Expand)
   ]
 
 main = do
