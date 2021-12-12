@@ -110,20 +110,12 @@ myLayoutHook =
     -- Don't want borders
     $ layoutHook desktopConfig
 
-myLogHook :: D.Client -> PP
-myLogHook dbus = filterOutWsPP [scratchpadWorkspaceTag] $ def
-  { ppOutput  = dbusOutput dbus
-  , ppCurrent = wrap ("%{B" ++ bg2 ++ "} ") " %{B-}"
-  , ppVisible = wrap ("%{B" ++ bg1 ++ "} ") " %{B-}"
-  , ppUrgent  = wrap ("%{F" ++ red ++ "} ") " %{F-}"
-  , ppHidden  = wrap " " " "
-  , ppWsSep   = ""
-  , ppSep     = " : "
-  , ppTitle   = const ""
-  }
+myStatusBar = "xmobar -x1"
+myLogHook h = do
+  filterOutWsPP [scratchpadWorkspaceTag] $ def { ppOutput = hPutStrLn h }
 
 myStartupHook = do
-  spawnOnce "launch_polybar.sh"
+  spawnOnce "stalonetray"
   spawnOnce
     "xss-lock --transfer-sleep-lock -- i3lockr --brighten 30 --blur 25 -- --nofork --ignore-empty-password"
   spawnOnce "xsetroot -cursor_name left_ptr"
@@ -236,11 +228,7 @@ myKeys c = mkKeymap
   ]
 
 main = do
-  dbus <- D.connectSession
-  D.requestName
-    dbus
-    (D.busName_ "org.xmonad.Log")
-    [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+  xmproc <- spawnPipe myStatusBar
   xmonad
     -- Needed to ensure stuff like XMobar stays on top
     $ docks
@@ -248,7 +236,7 @@ main = do
     $ ewmh
     -- Enables fullscreen EWMH support
     $ ewmhFullscreen
-    $ myConfig dbus
+    $ myConfig xmproc
 
 myConfig p = desktopConfig { borderWidth       = 0
                            , focusFollowsMouse = False
