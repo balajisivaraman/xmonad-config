@@ -38,35 +38,15 @@ myAppLauncher =
 myDocumentLauncher = "document-launcher"
 myClipboardManager = "clipcat-menu"
 
--- Gruvbox Dark Hard Theme
-bg = "#282828"
-bg0H = "#1d2021"
-bg0S = "#32302f"
-bg0 = "#282828"
-bg1 = "#3c3836"
-bg2 = "#504945"
-bg3 = "#665c54"
-bg4 = "#7c6f64"
-red = "#cc241d"
-redAlt = "#fb4934"
-green = "#98971a"
-greenAlt = "#b8bb26"
-yellow = "#d79921"
-yellowAlt = "#fabd2f"
-blue = "#458588"
-blueAlt = "#83a598"
-purple = "#b16286"
-purpleAlt = "#d3869b"
-orange = "#689d6a"
-orangeAlt = "#8ec07c"
-gray = "#a89984"
-grayAlt = "#928374"
-fg = "#ebdbb2"
-fg0 = "#fbf1c7"
-fg1 = "#ebdbb2"
-fg2 = "#d5c4a1"
-fg3 = "#bdae93"
-fg4 = "#a89984"
+-- Modus Colors
+bg = "#000000"
+fg = "#ffffff"
+bgWarm = "#382f27"
+fgWarm = "#f8dec0"
+red = "#ff8059"
+blue = "#2fafff"
+bgInactive = "#1e1e1e"
+fgInactive = "#bfc0c4"
 
 myFont = "xft:TerminessTTF NerdFont:pixelsize=14"
 
@@ -74,9 +54,9 @@ topBar = def { fontName            = myFont
              , activeColor         = blue
              , activeBorderColor   = blue
              , activeTextColor     = blue
-             , inactiveColor       = bg1
-             , inactiveBorderColor = bg1
-             , inactiveTextColor   = bg1
+             , inactiveColor       = bgInactive
+             , inactiveBorderColor = bgInactive
+             , inactiveTextColor   = bgInactive
              , urgentBorderColor   = red
              , urgentTextColor     = red
              , decoHeight          = 10
@@ -96,7 +76,7 @@ myPromptTheme = def { font                 = myFont
                     }
 
 warmPromptTheme =
-  myPromptTheme { bgColor = yellow, fgColor = bg0H, position = Top }
+  myPromptTheme { bgColor = bgWarm, fgColor = fgWarm, position = Top }
 
 addTopBar = noFrillsDeco shrinkText topBar
 
